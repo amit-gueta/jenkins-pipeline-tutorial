@@ -6,11 +6,11 @@ pipeline {
     // This section contains environment variables which are available for use in the
     // pipeline's stages.
     environment {
-	    region = "us-east-1"
-        docker_repo_uri = ""
-		task_def_arn = ""
-        cluster = ""
-        exec_role_arn = ""
+	    region = "eu-west-2"
+            docker_repo_uri = ""
+	    task_def_arn = ""
+            cluster = ""
+            exec_role_arn = ""
     }
     
     // Here you can define one or more stages for your pipeline.
