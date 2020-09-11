@@ -9,9 +9,8 @@ pipeline {
 	    
 	    region = "eu-west-2"
             docker_repo_uri = "921412878001.dkr.ecr.eu-west-2.amazonaws.com/sample-app"
-	    task_def_arn = ""
-            cluster = ""
-            exec_role_arn = ""
+	    task_def_arn = "arn:aws:ecs:eu-west-2:921412878001:task-definition/first-run-task-definition"
+            cluster = "sample-app"
     }
     
     // Here you can define one or more stages for your pipeline.
@@ -34,5 +33,16 @@ pipeline {
 		sh "docker rmi -f ${docker_repo_uri}:${commit_id}"
 	    }
 	}
+	stage('Deploy') {
+	    steps {
+		// Override image field in taskdef file
+		sh "sed -i 's|{{image}}|${docker_repo_uri}:${commit_id}|' taskdef.json"
+		// Create a new task definition revision
+		sh "aws ecs register-task-definition --execution-role-arn ${exec_role_arn} --cli-input-json file://taskdef.json --region ${region}"
+		// Update service on Fargate
+		sh "aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_def_arn} --region ${region}"
+	    }
+	}    
+	    
     }
 }
