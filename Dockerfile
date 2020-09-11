@@ -4,7 +4,7 @@ COPY . /code
 WORKDIR /code
 
 # Run unit tests
-RUN go test
+RUN cgo_enabled=0 go test
 
 # Build app
 RUN go build -o sample-app
