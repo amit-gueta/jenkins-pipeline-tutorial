@@ -11,6 +11,7 @@ pipeline {
             docker_repo_uri = "921412878001.dkr.ecr.eu-west-2.amazonaws.com/sample-app"
 	    task_def_arn = "arn:aws:ecs:eu-west-2:921412878001:task-definition/first-run-task-definition"
             cluster = "sample-app"
+	    exec_role_arn = "arn:aws:iam::921412878001:role/ecsTaskExecutionRole"
     }
     
     // Here you can define one or more stages for your pipeline.
