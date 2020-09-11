@@ -1,5 +1,5 @@
 FROM golang:alpine as builder
-
+RUN apk add build-base
 COPY . /code
 WORKDIR /code
 
